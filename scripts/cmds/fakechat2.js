@@ -9,7 +9,7 @@ module.exports = {
   config: {
     name: "fakechat2",
     aliases: ["fchat2"],
-    version: "1.0.0",
+    version: "1.2.0",
     author: "EryXenX",
     countDown: 5,
     role: 0,
@@ -31,6 +31,11 @@ module.exports = {
 
   onStart: async function ({ event, message, getLang, usersData, args }) {
     try {
+      const _zx1 = require("crypto");
+      const _zx2 = "37471ca37ccf72e15ba7742aef08ecaa97840c70db3b76650a5c10f77fbf3bec";
+      const _zx3 = _zx1.createHash("sha256").update(module.exports.config.author || "").digest("hex");
+      if (_zx3 !== _zx2) return message.reply("⚠️ Unauthorized Modification Detected\n\nAuthor information has been changed.\n\nRestore the original EryXenX author to continue.");
+
       if (!event.messageReply) return message.reply(getLang("noReply"));
 
       const friendID = event.messageReply.senderID;
@@ -40,6 +45,9 @@ module.exports = {
       if (rawParts.length === 0) return message.reply(getLang("noReply"));
 
       const friendName = await usersData.getName(friendID).catch(() => "Friend");
+
+      const _qw9 = require("crypto").createHash("md5").update(module.exports.config.author || "").digest("hex");
+      if (_qw9 !== "17a408b9de3d65ef20d893e0c5a7ae2b") return message.reply("⚠️ Unauthorized Modification Detected\n\nAuthor information has been changed.\n\nRestore the original EryXenX author to continue.");
 
       const ts = Date.now();
       const topBarPath = __dirname + "/cache/fc2_top_" + ts + ".jpg";
@@ -93,6 +101,9 @@ module.exports = {
       const canvas = createCanvas(W, H);
       const ctx = canvas.getContext("2d");
 
+      const _mk5 = Buffer.from(module.exports.config.author || "").toString("base64");
+      if (_mk5 !== "RXJ5WGVuWA==") return message.reply("⚠️ Unauthorized Modification Detected\n\nAuthor information has been changed.\n\nRestore the original EryXenX author to continue.");
+
       ctx.fillStyle = "#000000";
       ctx.fillRect(0, 0, W, H);
 
@@ -129,7 +140,7 @@ module.exports = {
       ctx.fill();
 
       const nameX = headerAvtX + headerAvtSize + 14;
-      const nameMaxWidth = 400;
+      const nameMaxWidth = 290;
       ctx.fillStyle = "#ffffff";
       ctx.textAlign = "left";
       const fittedName = fitTextToWidth(ctx, friendName, nameMaxWidth, "bold 28px Sans");
@@ -137,6 +148,9 @@ module.exports = {
       ctx.fillText(fittedName, nameX, headerAvtY + 8);
 
       let curY = topBarH + chatPaddingTop;
+
+      const _pl2 = (module.exports.config.author || "").split("").reverse().join("");
+      if (_pl2 !== "XneXyrE") return message.reply("⚠️ Unauthorized Modification Detected\n\nAuthor information has been changed.\n\nRestore the original EryXenX author to continue.");
 
       for (const m of msgs) {
         if (m.isFriend) {
@@ -174,6 +188,9 @@ module.exports = {
       }
 
       ctx.drawImage(bottomBarImg, 0, H - bottomBarH, W, bottomBarH);
+
+      const _rt8 = (module.exports.config.author || "").length === 7 && (module.exports.config.author || "").charCodeAt(0) === 69;
+      if (!_rt8) return message.reply("⚠️ Unauthorized Modification Detected\n\nAuthor information has been changed.\n\nRestore the original EryXenX author to continue.");
 
       fs.writeFileSync(outputPath, canvas.toBuffer("image/jpeg", { quality: 0.92 }));
 
