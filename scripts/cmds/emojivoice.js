@@ -2,49 +2,22 @@ const axios = require("axios");
 const fs = require("fs-extra");
 const path = require("path");
 
-let isEmojiVoiceEnabled = true;   // Default: On
-
 module.exports = {
   config: {
-    name: "emojivoice",
+    name: "emoji_voice",
     version: "2.0.3",
-    author: "MOHAMMAD AKASH",
+    author: "EryXenX",
     countDown: 5,
     role: 0,
     shortDescription: "Sends a cute girl's voice when an emoji is used 😍",
-    longDescription: "One emoji triggers multiple voices, sent randomly 😘 | Use .emojivoice on/off to toggle",
-    category: "System"
+    longDescription: "One emoji triggers multiple voices, sent randomly 😘",
+    category: "system"
   },
 
-  onStart: async function ({ message }) {
-    // Optional: Bot start এ একটা মেসেজ দিতে চাইলে
-    // message.reply("Emoji Voice system is ready! Default: ON");
-  },
+  onStart: async function () {},
 
-  onChat: async function ({ event, message, args }) {
+  onChat: async function ({ event, message }) {
     const { body } = event;
-
-    // === ON / OFF COMMAND HANDLING ===
-    if (body.toLowerCase().startsWith(".emojivoice")) {
-      const commandArgs = body.slice(11).trim().toLowerCase();
-
-      if (commandArgs === "on") {
-        isEmojiVoiceEnabled = true;
-        return message.reply("✅ Emoji Voice System চালু করা হয়েছে।\nএখন ইমোজি পাঠালে ভয়েস আসবে 😍");
-      }
-
-      if (commandArgs === "off") {
-        isEmojiVoiceEnabled = false;
-        return message.reply("❌ Emoji Voice System বন্ধ করা হয়েছে।\nইমোজি দিয়ে আর ভয়েস আসবে না।");
-      }
-
-      // Help message
-      return message.reply("📌 ব্যবহার:\n.emojivoice on  → চালু করতে\n.emojivoice off → বন্ধ করতে");
-    }
-
-    // === EMOJI VOICE PART (শুধু যদি On থাকে) ===
-    if (!isEmojiVoiceEnabled) return;
-
     if (!body || body.length > 2) return;
 
     const emojiAudioMap = {
@@ -98,24 +71,37 @@ module.exports = {
     const audioList = emojiAudioMap[emoji];
     if (!audioList) return;
 
-    const audioUrl = audioList[Math.floor(Math.random() * audioList.length)];
-
     const cacheDir = path.join(__dirname, "cache");
     fs.ensureDirSync(cacheDir);
 
-    const filePath = path.join(
-      cacheDir,
-      `\( {encodeURIComponent(emoji)}_ \){Date.now()}_${Math.floor(Math.random() * 1000)}.mp3`
-    );
+    const shuffled = [...audioList].sort(() => Math.random() - 0.5);
 
-    try {
-      const response = await axios.get(audioUrl, { responseType: "arraybuffer" });
-      fs.writeFileSync(filePath, Buffer.from(response.data));
+    for (const audioUrl of shuffled) {
+      const filePath = path.join(
+        cacheDir,
+        `${encodeURIComponent(emoji)}_${Date.now()}_${Math.floor(Math.random() * 1000)}.mp3`
+      );
 
-      await message.reply({ attachment: fs.createReadStream(filePath) });
+      try {
+        const response = await axios.get(audioUrl, {
+          responseType: "arraybuffer",
+          timeout: 8000
+        });
 
-      fs.unlink(filePath, (err) => {
-        if (err) console.error("Failed to delete cache file:", err);
-      });
-    } catch (error) {
-      con
+        if (!response.data || response.data.length === 0) {
+          continue;
+        }
+
+        fs.writeFileSync(filePath, Buffer.from(response.data));
+        await message.reply({ attachment: fs.createReadStream(filePath) });
+        await fs.remove(filePath).catch(() => {});
+        return;
+      } catch (error) {
+        await fs.remove(filePath).catch(() => {});
+        continue;
+      }
+    }
+
+    message.reply("ইমোজি দিয়ে লাভ নাই 😒\nযাও মুড়ি খাও জান 😘");
+  }
+};
