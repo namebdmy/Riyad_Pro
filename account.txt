@@ -1,3 +1,83 @@
-....
-
-Paste Your FB JSON COOKIES ✅
+[
+    {
+        "key": "datr",
+        "value": "GhVPaHCqCDuB2YsRUFeiGJqU",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "sb",
+        "value": "GhVPaPplj6V9eq_U0hb-285B",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "ps_l",
+        "value": "1",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "ps_n",
+        "value": "1",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "c_user",
+        "value": "61568863092143",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "wd",
+        "value": "980x1350",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "presence",
+        "value": "C%7B%22t3%22%3A%5B%5D%2C%22utc3%22%3A1783058075410%2C%22v%22%3A1%7D",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "fr",
+        "value": "2iwXfqRa2chNrvUUG.AWfXZmJ5uLvxzcv16G92k5ZacWJWmxlbewShx1OpIO8M9hIvyNQ.BqR06g..AAA.0.0.BqR06g.AWfB8cPzv2wnc-uZUMK8Y867fsw",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    },
+    {
+        "key": "xs",
+        "value": "15%3AlT8hCTF7zAVqQA%3A2%3A1782414256%3A-1%3A-1%3A%3AAczAOUkyUAH1E5aAYaQaO8yELSzfXRbqmJU-SYTpCg",
+        "domain": "facebook.com",
+        "path": "/",
+        "hostOnly": false,
+        "creation": "2026-07-03T05:54:47.304Z",
+        "lastAccessed": "2026-07-03T05:54:47.304Z"
+    }
+]
