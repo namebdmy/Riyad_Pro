@@ -31,8 +31,8 @@ module.exports = {
       const form = {
         body: `😹 ${boldName} tried to leave...  
 
-🚫 Not allowed here!  
-🔄 Added back 😇`
+🚫 গ্রুপ থেকে বের হউয়া এত সহজ না😂!   
+🔄 নে আবারো এড দিলাম 😇`
       };
 
       try {
