@@ -79,7 +79,13 @@ module.exports.onLoad = async function ({ api }) {
  else if (hour >= 17 && hour < 20) period = "Evening";
  else period = "Night";
 
- const finalMessage = `馃晵 ${timeFormatted} 鈥� ${period}\n\n${messageText}\n\n鈹佲攣鈹佲攣鈹佲攣鈹佲攣鈹佲攣鈹佲攣鈹佲攣鈹佲攣鈹佲攣\n馃搮 ${todayDate}\n鉁� Powered by: EryXenX`;
+ const finalMessage = `🕒 ${timeFormatted} - ${period}
+
+${messageText}
+
+━━━━━━━━━━━━━━━
+📅 ${todayDate}
+⚡ Powered by: RIYAD`;
 
  try {
  const allThreads = await api.getThreadList(100, null, ["INBOX"]);
