@@ -136,7 +136,7 @@ ${text}
 };
 
 // Command handler to manage autotimer status per group chat
-module.exports.run = async function ({ api, event, args }) {
+module.exports.onStart = async function ({ api, event, args }) {
   const { threadID, messageID } = event;
   
   if (!global.autoTimerConfig) global.autoTimerConfig = {};
