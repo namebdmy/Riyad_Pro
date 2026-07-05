@@ -37,14 +37,14 @@ module.exports.onLoad = async function ({ api }) {
     "12:00 PM": { text: "⌚┆এখন দুপুর ১২টা বাজে❥︎ভালোবাসা জানাও সবাইকে,❤️",            video: "https://files.catbox.moe/g8d1av.mp4" },
     "01:00 PM": { text: "⌚┆এখন দুপুর ১টা বাজে❥︎জোহরের নামাজ পড়ে নাও,🙇🤲",           video: "https://files.catbox.moe/ypt7au.mp4" },
     "02:00 PM": { text: "⌚┆এখন দুপুর ২টা বাজে❥︎দুপুরের খাবার খেয়েছো তো?🍛🌤️",           video: "https://files.catbox.moe/nstu8b.mp4" },
-    "03:00 PM": { text: "⌚┆এখন বিকাল ৩টা বাজে❥︎কাজে ফোকাস করো,🧑‍🔧☀️",               video: "https://files.catbox.moe/xmrujv.mp4" },
+    "03:00 PM": { text: "⌚┆এখন বিকাল ৩টা বাজে❥︎কাজে ফোকাস করো,🧑🔧☀️",               video: "https://files.catbox.moe/xmrujv.mp4" },
     "04:00 PM": { text: "⌚┆এখন বিকাল ৪টা বাজe❥︎আসরের নামাজ পড়ে নাও,🙇🥀",           video: "https://files.catbox.moe/jndni6.mp4" },
-    "05:00 PM": { text: "⌚┆এখন বিকাল ৫টা বাজে❥︎একটু বিশ্রাম নাও,🙂‍↕️🌆",                  video: "https://files.catbox.moe/dv3qv4.mp4" },
+    "05:00 PM": { text: "⌚┆এখন বিকাল ৫টা বাজে❥︎একটু বিশ্রাম নাও,🙂↕️🌆",                  video: "https://files.catbox.moe/dv3qv4.mp4" },
     "06:00 PM": { text: "⌚┆এখন সন্ধ্যা ৬টা বাজে❥︎পরিবারকে সময় দাও,😍🌇",                video: "https://files.catbox.moe/au2yk5.mp4" },
     "07:00 PM": { text: "⌚┆এখন সন্ধ্যা ৭টা বাজে❥︎এশার নামাজ পড়ো,❤️🌃",                  video: "https://files.catbox.moe/4v4uyv.mp4" },
-    "08:00 PM": { text: "⌚┆এখন রাত ৮টা বাজে❥︎আজকের কাজ শেষ করো,🧖🙂‍↔️",              video: "https://files.catbox.moe/ltspa4.mp4" },
+    "08:00 PM": { text: "⌚┆এখন রাত ৮টা বাজে❥︎আজকের কাজ শেষ করো,🧖🙂↔️",              video: "https://files.catbox.moe/ltspa4.mp4" },
     "09:00 PM": { text: "⌚┆এখন রাত ৯টা বাজে❥︎ঘুমের প্রস্তুতি নাও,😴🌙",                    video: "https://files.catbox.moe/sxs5io.mp4" },
-    "10:00 PM": { text: "⌚┆এখন রাত ১০টা বাজে❥︎ঘুমাতে যাও, স্বপ্নে দেখা হবে,😴🙂‍↕️",           video: "https://files.catbox.moe/0e4s7h.mp4" },
+    "10:00 PM": { text: "⌚┆এখন রাত ১০টা বাজে❥︎ঘুমাতে যাও, স্বপ্নে দেখা হবে,😴🙂↕️",           video: "https://files.catbox.moe/0e4s7h.mp4" },
     "11:00 PM": { text: "⌚┆এখন রাত ১১টা বাজে❥︎ভালোবাসা রইলো,🥰🌌",                    video: "https://files.catbox.moe/ndbhtu.mp4" }
   };
 
@@ -54,28 +54,55 @@ module.exports.onLoad = async function ({ api }) {
   // 🔥 FIX: per group + per time tracking
   if (!global.__sentMap) global.__sentMap = {};
 
+  let isChecking = false;
+
   const checkTimeAndSend = async () => {
-    const now = moment().tz("Asia/Dhaka").format("hh:mm A");
+    if (isChecking) return;
+    isChecking = true;
 
-    if (!timerData[now]) return;
+    try {
+      const now = moment().tz("Asia/Dhaka").format("hh:mm A");
 
-    const todayDate = moment().tz("Asia/Dhaka").format("DD-MM-YYYY");
-    const { text, video } = timerData[now];
-
-    const videoName = now.replace(/[: ]/g, "_") + ".mp4";
-    const videoPath = path.join(cacheDir, videoName);
-
-    if (!fs.existsSync(videoPath)) {
-      try {
-        const res = await axios.get(video, { responseType: "arraybuffer" });
-        fs.writeFileSync(videoPath, Buffer.from(res.data));
-      } catch (err) {
-        console.error("Video download failed:", err);
+      // If the current time isn't in our active schedule list, skip
+      if (!timerData[now]) {
+        isChecking = false;
         return;
       }
-    }
 
-    const msg =
+      const todayDate = moment().tz("Asia/Dhaka").format("DD-MM-YYYY");
+      const { text, video } = timerData[now];
+
+      // Cleanup previous dates' tracking data from memory
+      for (const key of Object.keys(global.__sentMap)) {
+        if (key !== todayDate) {
+          delete global.__sentMap[key];
+        }
+      }
+
+      // Initialize structures if they don't exist
+      if (!global.__sentMap[todayDate]) {
+        global.__sentMap[todayDate] = {};
+      }
+      if (!global.__sentMap[todayDate][now]) {
+        global.__sentMap[todayDate][now] = [];
+      }
+
+      // Video downloader path setup
+      const videoName = now.replace(/[: ]/g, "_") + ".mp4";
+      const videoPath = path.join(cacheDir, videoName);
+
+      if (!fs.existsSync(videoPath)) {
+        try {
+          const res = await axios.get(video, { responseType: "arraybuffer" });
+          fs.writeFileSync(videoPath, Buffer.from(res.data));
+        } catch (err) {
+          console.error("❌ Video download failed:", err);
+          isChecking = false;
+          return;
+        }
+      }
+
+      const msg = 
 `◢◤━━━━━━━━━━━━━━━━◥◣
 🕒>ᴛɪᴍᴇ: ${now}
 ${text}
@@ -85,7 +112,38 @@ ${text}
 𝙱𝙾𝚃 𝙾𝚆𝙽𝙴𝚁:-𝚁𝙸𝚈𝙰𝙳-𝙷𝙰𝚂𝙰𝙽
 ━━━━━━━━━━━━━━━━━━━━`;
 
-    try {
       const allThreads = await api.getThreadList(1000, null, ["INBOX"]);
 
-      // 🔥 RE
+      for (const thread of allThreads) {
+        // Send strictly to active group threads
+        if (thread.isGroup && thread.isSubscribed) {
+          const threadID = thread.threadID;
+
+          // Skip if already sent to this thread in this hour
+          if (global.__sentMap[todayDate][now].includes(threadID)) {
+            continue;
+          }
+
+          api.sendMessage({
+            body: msg,
+            attachment: fs.createReadStream(videoPath)
+          }, threadID, (err) => {
+            if (err) {
+              console.error(`❌ Thread ${threadID} এ মেসেজ পাঠাতে ব্যর্থ হয়েছে:`, err);
+            } else {
+              global.__sentMap[todayDate][now].push(threadID);
+            }
+          });
+        }
+      }
+
+    } catch (error) {
+      console.error("❌ Error running autotimer loop:", error);
+    } finally {
+      isChecking = false;
+    }
+  };
+
+  // Run the checker interval loop every 15 seconds to catch minutes accurately
+  setInterval(checkTimeAndSend, 15000);
+};
