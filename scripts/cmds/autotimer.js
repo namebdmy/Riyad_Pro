@@ -15,7 +15,7 @@ module.exports.config = {
 
 module.exports.onLoad = async function ({ api }) {
 
-  // 🔒 author lock check
+  // 🔒 Author lock check
   if (module.exports.config.author !== "ʀɪʏᴀᴅ-ʜᴀsᴀɴ") {
     console.error("❌ Author নাম পরিবর্তন করা হয়েছে। ফাইল চলবে না।");
     return process.exit(1);
@@ -39,7 +39,7 @@ module.exports.onLoad = async function ({ api }) {
     "02:00 PM": { text: "⌚┆এখন দুপুর ২টা বাজে❥︎দুপুরের খাবার খেয়েছো তো?🍛🌤️",           video: "https://files.catbox.moe/nstu8b.mp4" },
     "03:00 PM": { text: "⌚┆এখন বিকাল ৩টা বাজে❥︎কাজে ফোকাস করো,🧑🔧☀️",               video: "https://files.catbox.moe/xmrujv.mp4" },
     "04:00 PM": { text: "⌚┆এখন বিকাল ৪টা বাজe❥︎আসরের নামাজ পড়ে নাও,🙇🥀",           video: "https://files.catbox.moe/jndni6.mp4" },
-    "05:00 PM": { text: "⌚┆এখন বিকাল ৫টা বাজে❥︎একটু বিশ্রাম নাও,🙂↕️🌆",                  video: "https://files.catbox.moe/dv3qv4.mp4" },
+    "05:00 PM": { text: "⌚┆এখন বিকাল ৫টা বাজে❥︎একত্ব বিশ্রাম নাও,🙂↕️🌆",                  video: "https://files.catbox.moe/dv3qv4.mp4" },
     "06:00 PM": { text: "⌚┆এখন সন্ধ্যা ৬টা বাজে❥︎পরিবারকে সময় দাও,😍🌇",                video: "https://files.catbox.moe/au2yk5.mp4" },
     "07:00 PM": { text: "⌚┆এখন সন্ধ্যা ৭টা বাজে❥︎এশার নামাজ পড়ো,❤️🌃",                  video: "https://files.catbox.moe/4v4uyv.mp4" },
     "08:00 PM": { text: "⌚┆এখন রাত ৮টা বাজে❥︎আজকের কাজ শেষ করো,🧖🙂↔️",              video: "https://files.catbox.moe/ltspa4.mp4" },
@@ -51,57 +51,34 @@ module.exports.onLoad = async function ({ api }) {
   const cacheDir = path.join(__dirname, "cache");
   if (!fs.existsSync(cacheDir)) fs.mkdirSync(cacheDir);
 
-  // 🔥 FIX: per group + per time tracking
+  // 🔥 tracking map initialization
   if (!global.__sentMap) global.__sentMap = {};
 
-  let isChecking = false;
-
   const checkTimeAndSend = async () => {
-    if (isChecking) return;
-    isChecking = true;
-
     try {
       const now = moment().tz("Asia/Dhaka").format("hh:mm A");
 
-      // If the current time isn't in our active schedule list, skip
-      if (!timerData[now]) {
-        isChecking = false;
-        return;
-      }
+      // যদি এই নির্দিষ্ট সময়ের জন্য কোনো মেসেজ সেট করা না থাকে, তাহলে ফেরত যাবে
+      if (!timerData[now]) return;
 
       const todayDate = moment().tz("Asia/Dhaka").format("DD-MM-YYYY");
       const { text, video } = timerData[now];
 
-      // Cleanup previous dates' tracking data from memory
-      for (const key of Object.keys(global.__sentMap)) {
-        if (key !== todayDate) {
-          delete global.__sentMap[key];
-        }
-      }
-
-      // Initialize structures if they don't exist
-      if (!global.__sentMap[todayDate]) {
-        global.__sentMap[todayDate] = {};
-      }
-      if (!global.__sentMap[todayDate][now]) {
-        global.__sentMap[todayDate][now] = [];
-      }
-
-      // Video downloader path setup
       const videoName = now.replace(/[: ]/g, "_") + ".mp4";
       const videoPath = path.join(cacheDir, videoName);
 
+      // ভিডিও ডাউনলোড করার লজিক
       if (!fs.existsSync(videoPath)) {
         try {
           const res = await axios.get(video, { responseType: "arraybuffer" });
           fs.writeFileSync(videoPath, Buffer.from(res.data));
         } catch (err) {
-          console.error("❌ Video download failed:", err);
-          isChecking = false;
+          console.error(`❌ [${now}] Video download failed:`, err);
           return;
         }
       }
 
+      // মেসেজ টেমপ্লেট
       const msg = 
 `◢◤━━━━━━━━━━━━━━━━◥◣
 🕒>ᴛɪᴍᴇ: ${now}
@@ -112,38 +89,58 @@ ${text}
 𝙱𝙾𝚃 𝙾𝚆𝙽𝙴𝚁:-𝚁𝙸𝚈𝙰𝙳-𝙷𝙰𝚂𝙰𝙽
 ━━━━━━━━━━━━━━━━━━━━`;
 
-      const allThreads = await api.getThreadList(1000, null, ["INBOX"]);
+      // ইনবক্সের থ্রেড লিস্ট লোড করা হচ্ছে
+      const allThreads = await api.getThreadList(100, null, ["INBOX"]);
+
+      if (!global.__sentMap[todayDate]) {
+        // নতুন দিনের জন্য ট্র্যাকিং রিসেট করা
+        global.__sentMap = { [todayDate]: {} };
+      }
 
       for (const thread of allThreads) {
-        // Send strictly to active group threads
-        if (thread.isGroup && thread.isSubscribed) {
+        try {
           const threadID = thread.threadID;
+          if (!threadID) continue;
 
-          // Skip if already sent to this thread in this hour
-          if (global.__sentMap[todayDate][now].includes(threadID)) {
+          // থ্রেডের জন্য ট্র্যাকিং অ্যারে তৈরি
+          if (!global.__sentMap[todayDate][threadID]) {
+            global.__sentMap[todayDate][threadID] = [];
+          }
+
+          // যদি এই গ্রুপ/চ্যাটে এই ঘণ্টার মেসেজ ইতিমধ্যে পাঠানো হয়ে থাকে, তবে স্কিপ করবে
+          if (global.__sentMap[todayDate][threadID].includes(now)) {
             continue;
           }
 
-          api.sendMessage({
+          const messageToSend = {
             body: msg,
             attachment: fs.createReadStream(videoPath)
-          }, threadID, (err) => {
+          };
+
+          // মেসেজ পাঠানো হচ্ছে
+          api.sendMessage(messageToSend, threadID, (err) => {
             if (err) {
-              console.error(`❌ Thread ${threadID} এ মেসেজ পাঠাতে ব্যর্থ হয়েছে:`, err);
+              console.error(`❌ Thread ${threadID}-এ মেসেজ পাঠানো ব্যর্থ হয়েছে:`, err);
             } else {
-              global.__sentMap[todayDate][now].push(threadID);
+              global.__sentMap[todayDate][threadID].push(now);
+              console.log(`✅ [${now}] Successfully sent to thread: ${threadID}`);
             }
           });
+
+          // স্প্যাম এড়াতে প্রতিটি গ্রুপের মেসেজের মধ্যে ২ সেকেন্ডের গ্যাপ রাখা হয়েছে
+          await new Promise((resolve) => setTimeout(resolve, 2000));
+        } catch (threadErr) {
+          console.error(`❌ Thread ${thread?.threadID} প্রসেস করার সময় ভুল হয়েছে:`, threadErr);
         }
       }
-
-    } catch (error) {
-      console.error("❌ Error running autotimer loop:", error);
-    } finally {
-      isChecking = false;
+    } catch (err) {
+      console.error("❌ checkTimeAndSend ফাংশনে ভুল হয়েছে:", err);
     }
   };
 
-  // Run the checker interval loop every 15 seconds to catch minutes accurately
-  setInterval(checkTimeAndSend, 15000);
+  // প্রথমবার লোড হওয়ার সাথে সাথে একবার চেক করবে
+  checkTimeAndSend();
+
+  // প্রতি ৩০ সেকেন্ড পরপর সময় চেক করবে
+  setInterval(checkTimeAndSend, 30000);
 };
