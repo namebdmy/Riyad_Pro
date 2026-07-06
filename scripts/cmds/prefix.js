@@ -4,8 +4,8 @@ const { utils } = global;
 module.exports = {
 	config: {
 		name: "prefix",
-		version: "1.4",
-		author: "NTKhang",
+		version: "2.0",
+		author: "Riyad",
 		countDown: 5,
 		role: 0,
 		description: "Thay đổi dấu lệnh của bot trong box chat của bạn hoặc cả hệ thống bot (chỉ admin bot)",
@@ -36,7 +36,7 @@ module.exports = {
 			confirmThisThread: "Vui lòng thả cảm xúc bất kỳ vào tin nhắn này để xác nhận thay đổi prefix trong nhóm chat của bạn",
 			successGlobal: "Đã thay đổi prefix hệ thống bot thành: %1",
 			successThisThread: "Đã thay đổi prefix trong nhóm chat của bạn thành: %1",
-			myPrefix: "🌐 Prefix của hệ thống: %1\n🛸 Prefix của nhóm bạn: %2"
+			myPrefix: "╭⚜️━━━ 𝐓𝐇Ô𝐍𝐆 𝐓𝐈𝐍 𝐏𝐑𝐄𝐅𝐈𝐗 ━━━⚜️╮\n┃ 🌐 Prefix hệ thống: %1\n┃ 🛸 Prefix nhóm chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Phiên bản: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		en: {
 			reset: "Your prefix has been reset to default: %1",
@@ -45,7 +45,7 @@ module.exports = {
 			confirmThisThread: "Please react to this message to confirm change prefix in your box chat",
 			successGlobal: "Changed prefix of system bot to: %1",
 			successThisThread: "Changed prefix in your box chat to: %1",
-			myPrefix: "Hey senpai! ~_~\n🌐 Global prefix: %1\n🛸 Your group chat prefix: %2"
+			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Thread Prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		tl: {
 			reset: "Ang iyong prefix ay na-reset sa default: %1",
@@ -54,7 +54,7 @@ module.exports = {
 			confirmThisThread: "Mangyaring mag-react sa mensaheng ito para kumpirmahin ang pagbabago ng prefix sa iyong box chat",
 			successGlobal: "Binago ang prefix ng system bot sa: %1",
 			successThisThread: "Binago ang prefix sa iyong box chat sa: %1",
-			myPrefix: "Hey senpai! ~_~\n🌐 Global prefix: %1\n🛸 Prefix ng iyong group chat: %2"
+			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Prefix ng iyong group chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Bersyon: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		hi: {
 			reset: "Aapka prefix default par reset kar diya gaya: %1",
@@ -63,7 +63,7 @@ module.exports = {
 			confirmThisThread: "Aapke box chat mein prefix badlne ki pushthi ke liye is message par react karein",
 			successGlobal: "System bot ka prefix badal diya gaya: %1",
 			successThisThread: "Aapke box chat ka prefix badal diya gaya: %1",
-			myPrefix: "Hey senpai! ~_~\n🌐 Global prefix: %1\n🛸 Aapke group chat ka prefix: %2"
+			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Aapke group chat ka prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		ar: {
 			reset: "تمت إعادة تعيين بادئتك إلى الافتراضي: %1",
@@ -72,25 +72,43 @@ module.exports = {
 			confirmThisThread: "الرجاء التفاعل مع هذه الرسالة لتأكيد تغيير البادئة في محادثتك",
 			successGlobal: "تم تغيير بادئة بوت النظام إلى: %1",
 			successThisThread: "تم تغيير البادئة في محادثتك إلى: %1",
-			myPrefix: "Hey senpai! ~_~\n🌐 البادئة العامة: %1\n🛸 بادئة مجموعتك: %2"
+			myPrefix: "╭⚜️━━━ معلومات البادئة ━━━⚜️╮\n┃ 🌐 البادئة العامة: %1\n┃ 🛸 بادئة مجموعتك: %2\n┃\n┃ 👤 المالك: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ الإصدار: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		bn: {
 			reset: "আপনার prefix default এ রিসেট করা হয়েছে: %1",
 			onlyAdmin: "শুধুমাত্র admin system bot এর prefix পরিবর্তন করতে পারবে",
 			confirmGlobal: "System bot এর prefix পরিবর্তন নিশ্চিত করতে এই message এ react করুন",
 			confirmThisThread: "আপনার box chat এ prefix পরিবর্তন নিশ্চিত করতে এই message এ react করুন",
-			successGlobal: "System bot এর prefix পরিবর্তন হয়েছে: %1",
-			successThisThread: "আপনার box chat এর prefix পরিবর্তন হয়েছে: %1",
-			myPrefix: "Hey senpai! ~_~\n🌐 Global prefix: %1\n🛸 আপনার group chat prefix: %2"
+			successGlobal: "System bot এর prefix পরিবর্তন হয়েছে: %1",
+			successThisThread: "আপনার box chat এর prefix পরিবর্তন হয়েছে: %1",
+			myPrefix: "╭⚜️━━━ বটের প্রিফিক্স তথ্য ━━━⚜️╮\n┃ 🌐 গ্লোবাল প্রিফিক্স: %1\n┃ 🛸 আপনার গ্রুপ চ্যাট প্রিফিক্স: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ সংস্করণ: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
 		}
 	},
 
-	onStart: async function ({ message, role, args, commandName, event, threadsData, getLang }) {
+	onStart: async function ({ api, message, role, args, commandName, event, threadsData, getLang }) {
+		// Hook to safely separate multiple bots by using their unique Bot UID
+		const botID = api?.getCurrentUserID?.() || "default";
+
+		// Dynamically monkeypatch global.utils.getPrefix to load the bot-specific prefix
+		if (global.utils && !global.utils.getPrefix_original) {
+			global.utils.getPrefix_original = global.utils.getPrefix;
+			global.utils.getPrefix = function (threadID) {
+				const currentBotID = global.client?.api?.getCurrentUserID?.() || botID;
+				const threadData = global.db?.allThreadData?.find?.(t => t.threadID == threadID);
+				if (threadData?.data) {
+					// Use bot-specific prefix if available, otherwise fall back to thread generic prefix
+					const botSpecificPrefix = threadData.data["prefix_" + currentBotID];
+					if (botSpecificPrefix) return botSpecificPrefix;
+				}
+				return global.utils.getPrefix_original(threadID);
+			};
+		}
+
 		if (!args[0])
 			return message.SyntaxError();
 
 		if (args[0] == 'reset') {
-			await threadsData.set(event.threadID, null, "data.prefix");
+			await threadsData.set(event.threadID, null, "data.prefix_" + botID);
 			return message.reply(getLang("reset", global.GoatBot.config.prefix));
 		}
 
@@ -98,16 +116,18 @@ module.exports = {
 		const formSet = {
 			commandName,
 			author: event.senderID,
-			newPrefix
+			newPrefix,
+			botID // Bind this specific bot ID to the reaction callback context
 		};
 
-		if (args[1] === "-g")
+		if (args[1] === "-g") {
 			if (role < 2)
 				return message.reply(getLang("onlyAdmin"));
 			else
 				formSet.setGlobal = true;
-		else
+		} else {
 			formSet.setGlobal = false;
+		}
 
 		return message.reply(args[1] === "-g" ? getLang("confirmGlobal") : getLang("confirmThisThread"), (err, info) => {
 			formSet.messageID = info.messageID;
@@ -115,25 +135,54 @@ module.exports = {
 		});
 	},
 
-	onReaction: async function ({ message, threadsData, event, Reaction, getLang }) {
-		const { author, newPrefix, setGlobal } = Reaction;
+	onReaction: async function ({ api, message, threadsData, event, Reaction, getLang }) {
+		const { author, newPrefix, setGlobal, botID } = Reaction;
 		if (event.userID !== author)
 			return;
+
+		// Ensure that only the bot that initiated the reaction responds
+		const currentBotID = api?.getCurrentUserID?.() || "default";
+		if (botID && botID !== currentBotID) {
+			return; // Ignore reaction if this isn't the targeted bot
+		}
+
 		if (setGlobal) {
 			global.GoatBot.config.prefix = newPrefix;
 			fs.writeFileSync(global.client.dirConfig, JSON.stringify(global.GoatBot.config, null, 2));
 			return message.reply(getLang("successGlobal", newPrefix));
 		}
 		else {
-			await threadsData.set(event.threadID, newPrefix, "data.prefix");
+			// Save the prefix using a unique, bot-specific database key to prevent multi-bot conflicts
+			await threadsData.set(event.threadID, newPrefix, "data.prefix_" + currentBotID);
 			return message.reply(getLang("successThisThread", newPrefix));
 		}
 	},
 
-	onChat: async function ({ event, message, getLang }) {
-		if (event.body && event.body.toLowerCase() === "prefix")
+	onChat: async function ({ api, event, message, getLang }) {
+		if (event.body && event.body.toLowerCase() === "prefix") {
+			const currentBotID = api?.getCurrentUserID?.() || "default";
+			
+			// Initialize hook if not done already
+			if (global.utils && !global.utils.getPrefix_original) {
+				global.utils.getPrefix_original = global.utils.getPrefix;
+				global.utils.getPrefix = function (threadID) {
+					const botID = global.client?.api?.getCurrentUserID?.() || currentBotID;
+					const threadData = global.db?.allThreadData?.find?.(t => t.threadID == threadID);
+					if (threadData?.data) {
+						const botSpecificPrefix = threadData.data["prefix_" + botID];
+						if (botSpecificPrefix) return botSpecificPrefix;
+					}
+					return global.utils.getPrefix_original(threadID);
+				};
+			}
+
+			// Fetch the correct prefix for this specific bot or fallback
+			const threadData = global.db?.allThreadData?.find?.(t => t.threadID == event.threadID);
+			const localPrefix = threadData?.data?.["prefix_" + currentBotID] || global.utils?.getPrefix(event.threadID);
+
 			return () => {
-				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, utils.getPrefix(event.threadID)));
+				return message.reply(getLang("myPrefix", global.GoatBot.config.prefix, localPrefix));
 			};
+		}
 	}
 };
