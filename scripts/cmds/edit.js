@@ -1,152 +1,160 @@
-const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
+const axios = require("axios");
 
-// Renz API JSON URL (GoatBot-V2 standard)
-const noobcore = "https://raw.githubusercontent.com/noobcore404/NC-STORE/main/NCApiUrl.json";
-
-// Memory cache for Renz API URL to make it fast
-let cachedRenzUrl = null;
+// Memory cache for Arafat API URL to make it fast
+let cachedApiUrl = null;
 let cacheTime = 0;
 
-async function getRenzApi() {
-  // If we have cached URL and it is less than 30 minutes old, return it instantly
-  if (cachedRenzUrl && (Date.now() - cacheTime < 30 * 60 * 1000)) {
-    return cachedRenzUrl;
+const githubJson = "https://raw.githubusercontent.com/Arafat-Core/cmds/refs/heads/main/api.json";
+
+async function getArafatApi() {
+  if (cachedApiUrl && (Date.now() - cacheTime < 30 * 60 * 1000)) {
+    return cachedApiUrl;
   }
-  
   try {
-    const res = await axios.get(noobcore, { timeout: 10000 });
-    if (res.data?.renz) {
-      cachedRenzUrl = res.data.renz;
+    const res = await axios.get(githubJson, { timeout: 10000 });
+    if (res.data?.api) {
+      cachedApiUrl = res.data.api;
       cacheTime = Date.now();
-      return cachedRenzUrl;
+      return cachedApiUrl;
     }
   } catch (err) {
-    // If request fails but we have cached URL, fallback to it
-    if (cachedRenzUrl) {
-      console.warn("Using stale cached Renz API URL due to fetch error:", err.message);
-      return cachedRenzUrl;
+    if (cachedApiUrl) {
+      console.warn("Using stale cached Arafat API URL due to fetch error:", err.message);
+      return cachedApiUrl;
     }
     throw err;
   }
-  throw new Error("Renz API not found in JSON");
+  throw new Error("API load error from JSON");
 }
 
 module.exports = {
   config: {
     name: "edit",
-    aliases: ["nanobanana", "gptimage"],
-    version: "7.8",
+    aliases: ["e"],
     author: "RiYaD",
+    version: "4.4",
     countDown: 5,
     role: 0,
     shortDescription: {
-      en: "Generate or edit images using text prompts"
+      en: "Edit images using text prompts"
     },
     longDescription: {
-      en: "Generate or edit images using text prompts"
+      en: "Edit images using text prompts"
     },
     category: "image",
     guide: {
-      en: "{pn} <prompt> | Reply to an image with your prompt"
+      en: "{pn} <prompt> | Reply to an image with your prompt or use <image_url> <prompt>"
     }
   },
 
-  onStart: async function ({ api, event, args }) {
+  onStart: async function ({ message, args, api, event }) {
     const { threadID, messageID, messageReply } = event;
-    const prompt = args.join(" ").trim();
+    let imageUrl, prompt;
 
-    if (!prompt) {
-      return api.sendMessage(
-        "❌ 𝗣𝗹𝗲𝗮𝘀𝗲 𝗽𝗿𝗼𝘃𝗶𝗱𝗲 𝗮 𝗽𝗿𝗼𝗺𝗽𝘁.\n\n💡 𝙀𝙭𝙖𝙢𝙥𝙡𝙚𝙨:\n• !edit a cyberpunk city\n• !edit make me anime (reply to an image)",
-        threadID,
-        messageID
-      );
+    // High compatibility helper for GoatBot V2 message system
+    const sendReply = async (msgObj) => {
+      if (message && typeof message.reply === "function") {
+        return await message.reply(msgObj);
+      } else {
+        return await api.sendMessage(msgObj, threadID, messageID);
+      }
+    };
+
+    // Support both event.messageReply and arguments image URL
+    if (messageReply?.attachments?.length > 0 && (messageReply.attachments[0].type === "photo" || messageReply.attachments[0].type === "image")) {
+      imageUrl = messageReply.attachments[0].url;
+      prompt = args.join(" ").trim();
+    } else if (args.length >= 2) {
+      imageUrl = args[0];
+      prompt = args.slice(1).join(" ").trim();
+    } else {
+      return sendReply("❌ 𝐌𝐢𝐬𝐬𝐢𝐧𝐠 𝐢𝐦𝐚𝐠𝐞 𝐨𝐫 𝐩𝐫𝐨𝐦𝐩𝐭.\n\n💡 𝙂𝙪𝙞𝙙𝙚: Reply to an image with a prompt, or use: !edit <image_url> <prompt>");
     }
 
-    const loadingMsg = await api.sendMessage("⏳ Pʀᴏᴄᴇssɪɴɢ ʏᴏᴜʀ ɪᴍᴀɢᴇ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...", threadID, messageID);
+    if (!prompt) {
+      return sendReply("❌ 𝐏𝐫𝐨𝐦𝐩𝐭 𝐦𝐢𝐬𝐬𝐢𝐧𝐠.");
+    }
 
-    const imgPath = path.join(__dirname, "cache", `${Date.now()}_gptgen.png`);
+    const waitMsg = await sendReply("⏳ Pʀᴏᴄᴇssɪɴɢ ʏᴏᴜʀ ɪᴍᴀɢᴇ, ᴘʟᴇᴀsᴇ ᴡᴀɪᴛ...");
+    const waitMsgID = waitMsg?.messageID;
+
+    const cacheDir = path.join(__dirname, "cache");
+    const filePath = path.join(cacheDir, `${Date.now()}_edited.png`);
 
     try {
-      // 1. Fetch Renz API URL (cached for extreme speed)
-      const BASE_URL = await getRenzApi();
-      let apiURL = `${BASE_URL}/api/gptimage?prompt=${encodeURIComponent(prompt)}`;
+      // Get base API URL from cached fetch
+      const baseApi = await getArafatApi();
+      const API_URL = `${baseApi}/arafatedit`;
 
-      // 2. Handle replied photo/image attachment
-      const repliedAttachment = messageReply?.attachments?.[0];
-      if (repliedAttachment && (repliedAttachment.type === "photo" || repliedAttachment.type === "image")) {
-        apiURL += `&ref=${encodeURIComponent(repliedAttachment.url)}`;
-        if (repliedAttachment.width && repliedAttachment.height) {
-          apiURL += `&width=${repliedAttachment.width}&height=${repliedAttachment.height}`;
-        }
-      } else {
-        apiURL += `&width=512&height=512`;
-      }
-
-      // 3. Request the image from the API
-      const res = await axios.get(apiURL, {
-        responseType: "arraybuffer",
-        timeout: 180000 // 3 minutes timeout for image generation
+      // Request to edit the image
+      const response = await axios.post(API_URL, {
+        prompt: prompt,
+        image_urls: [imageUrl],
+        font: "Poppins"
       });
 
-      // 4. Save the image to temporary cache folder
-      fs.mkdirSync(path.dirname(imgPath), { recursive: true });
-      fs.writeFileSync(imgPath, res.data);
+      if (!response.data || !response.data.image_url) {
+        throw new Error("API did not return any image URL");
+      }
 
-      // 5. Safely unsend the loading message
+      const editedUrl = response.data.image_url;
+
+      // Fetch the edited image as arraybuffer
+      const fileBuffer = await axios.get(editedUrl, { 
+        responseType: "arraybuffer",
+        timeout: 180000 
+      });
+
+      // Write to temp file
+      fs.mkdirSync(cacheDir, { recursive: true });
+      fs.writeFileSync(filePath, fileBuffer.data);
+
+      // Safely unsend loading message
       try {
-        if (loadingMsg && loadingMsg.messageID) {
-          await api.unsendMessage(loadingMsg.messageID);
+        if (waitMsgID) {
+          await api.unsendMessage(waitMsgID);
         }
       } catch (unsendErr) {
         console.error("Failed to unsend loading message:", unsendErr.message);
       }
 
-      // 6. Build the beautiful response text
-      const bodyText = `✧━━━━━━━━━━━━━━━━✧\n  🎨  𝗜𝗠𝗔𝗚𝗘 𝗚𝗘𝗡𝗘𝗥𝗔𝗧𝗢𝗥  🎨\n✧━━━━━━━━━━━━━━━━✧\n\n👑 𝗖𝗿𝗲𝗮𝘁𝗲𝗱 𝗕𝘆 – 𝗥𝗶𝗬𝗮𝗗\n\n✨ Here your image ✨\n📝 𝗣𝗿𝗼𝗺𝗽𝘁: ${prompt}\n\n✧━━━━━━━━━━━━━━━━✧`;
+      // Build the beautiful response text
+      const bodyText = `✧━━━━━━━━━━━━━━━━✧\n  🎨  𝗚𝗣𝗧 𝗜𝗠𝗔𝗚𝗘 𝗘𝗗𝗜𝗧𝗢𝗥  🎨\n✧━━━━━━━━━━━━━━━━✧\n\n👑 𝗖𝗿𝗲𝗮𝘁𝗲𝗱 𝗕𝘆 – 𝗥𝗶𝗬𝗮𝗗\n\n✨ Here your image ✨\n📝 𝗣𝗿𝗼𝗺𝗽𝘁: ${prompt}\n\n✧━━━━━━━━━━━━━━━━✧`;
 
-      // 7. Send the generated image and delete the temporary file
-      await api.sendMessage(
-        {
-          body: bodyText,
-          attachment: fs.createReadStream(imgPath)
-        },
-        threadID,
-        (err) => {
-          if (err) console.error("Error sending image:", err);
-          if (fs.existsSync(imgPath)) {
-            try {
-              fs.unlinkSync(imgPath);
-            } catch (unlinkErr) {
-              console.error("Failed to delete temp image file:", unlinkErr.message);
-            }
-          }
-        },
-        messageID
-      );
+      // Send the completed edited image and delete temp file
+      await sendReply({
+        body: bodyText,
+        attachment: fs.createReadStream(filePath)
+      });
+
+      if (fs.existsSync(filePath)) {
+        try {
+          fs.unlinkSync(filePath);
+        } catch (unlinkErr) {
+          console.error("Failed to delete temp image file:", unlinkErr.message);
+        }
+      }
 
     } catch (err) {
-      console.error("GPTGEN Error:", err?.response?.data || err.message);
-      
-      // Attempt to clean up loading message in case of failure
+      console.error("Edit Command Error:", err?.response?.data || err.message);
+
+      // Try to clean up wait message
       try {
-        if (loadingMsg && loadingMsg.messageID) {
-          await api.unsendMessage(loadingMsg.messageID);
+        if (waitMsgID) {
+          await api.unsendMessage(waitMsgID);
         }
-      } catch (unsendErr) {
-        // Ignore unsend error on failure
-      }
-      
-      // Clean up temp file if it exists
-      if (fs.existsSync(imgPath)) {
+      } catch (unsendErr) {}
+
+      // Clean up temp file
+      if (fs.existsSync(filePath)) {
         try {
-          fs.unlinkSync(imgPath);
+          fs.unlinkSync(filePath);
         } catch (unlinkErr) {}
       }
 
-      api.sendMessage("❌ Fᴀɪʟᴇᴅ ᴛᴏ ᴘʀᴏᴄᴇss ɪᴍᴀɢᴇ. Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ ʟᴀᴛᴇʀ.", threadID, messageID);
+      api.sendMessage("❌ Fᴀɪʟᴇᴅ ᴛᴏ ᴇᴅɪᴛ ɪᴍᴀɢᴇ. Pʟᴇᴀsᴇ ᴛʀʏ ᴀɢᴀɪɴ ʟᴀᴛᴇʀ.", threadID, messageID);
     }
   }
 };
