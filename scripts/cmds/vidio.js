@@ -33,7 +33,7 @@ const baseApiUrl = async () => {
 
 module.exports = {
         config: {
-                name: "video",
+                name: "vidio",
                 aliases: ["ভিডিও", "vidio", "vid"],
                 version: "2.0",
                 author: "Riyad",
@@ -56,19 +56,19 @@ module.exports = {
                 bn: {
                         noInput: "× হেই সুইটি, ভিডিওর নাম বা লিঙ্ক তো দাও! 📺✨",
                         noResult: "× দুঃখিত বেবি, কোনো রেজাল্ট পাওয়া যায়নি। 🥺",
-                        success: "✨ এখানে আপনার ভিডিওটি তৈরি করা হয়েছে। আপনি এটি এখনই দেখতে পারেন। 🎬\n\n📝 𝗧𝗶𝘁𝗹𝗲: ❮ %1 ❯\n👤 𝗢𝘄𝗻𝗲𝗿: Riad 🌸",
+                        success: "✨ এখানে আপনার ভিডিওটি তৈরি করা হয়েছে। আপনি এটি এখনই দেখতে পারেন। 🎬\n\n📝 𝗧𝗶𝘁𝗹𝗲: ❮ %1 ❯\n👤 𝗢𝘄𝗻𝗲𝗿: |I{•---» 𝙍𝙄𝙔𝘼𝘿 «---•}I| 🌸",
                         error: "× সমস্যা হয়েছে: %1। প্রয়োজনে Contact Riyad! 💌"
                 },
                 en: {
                         noInput: "× Sweetheart, please provide a video name or link! 📺✨",
                         noResult: "× No results found. Let's try another name! 🥺",
-                        success: "✨ Here is your video, it has been created. You can watch it now. 🎬\n\n📝 𝗧𝗶𝘁𝗹𝗲: ❮ %1 ❯\n👤 𝗢𝘄𝗻𝗲𝗿: Riad 🌸",
+                        success: "✨ Here is your video, it has been created. You can watch it now. 🎬\n\n📝 𝗧𝗶𝘁𝗹𝗲: ❮ %1 ❯\n👤 𝗢𝘄𝗻𝗲𝗿: |I{•---» 𝙍𝙄𝙔𝘼𝘿 «---•}I| 🌸",
                         error: "× API error: %1. Contact Riyad for help! 💌"
                 },
                 vi: {
                         noInput: "× Cưng ơi, vui lòng cung cấp tên hoặc liên kết video! 📺✨",
                         noResult: "× Không tìm thấy kết quả phù hợp. 🥺",
-                        success: "✨ Video của bạn đã được tạo thành công, bạn có thể xem ngay bây giờ. 🎬\n\n📝 𝐓𝐢ê𝐮 đề: ❮ %1 ❯\n👤 𝐍𝐠ườ𝐢 sở 𝐡ữ𝐮: Riad 🌸",
+                        success: "✨ Video của bạn đã được tạo thành công, bạn có thể xem ngay bây giờ. 🎬\n\n📝 𝐓𝐢ê𝐮 đề: ❮ %1 ❯\n👤 𝐍𝐠ườ𝐢 sở 𝐡ữ𝐮: |I{•---» 𝙍𝙄𝙔𝘼𝘿 «---•}I| 🌸",
                         error: "× Lỗi: %1. Liên hệ Riyad để hỗ trợ! 💌"
                 }
         },
