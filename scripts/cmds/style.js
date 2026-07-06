@@ -3,7 +3,7 @@
  * GoatBot V2 Command: .style
  * Premium Font & Text Style Generator with 50+ Fonts and 500+ Decorations.
  * 
- * Author: Hasan Riyad (GoatBot V2 Style Generator)
+ * Author: RIYAD-HASAN (GoatBot V2 Style Generator)
  * Version: 2.1.0
  * 
  * Command Format:
@@ -313,7 +313,7 @@ module.exports.config = {
 
 module.exports.onStart = async function ({ api, event, args, message }) {
   if (!args[0]) {
-    return message.reply("⚠️ ব্যবহারের নিয়ম: .style <font_style> <text_style> <your_text>\n\nউদাহরণ: .style 05 18 CEO MAM HALIMA\n\nসকল স্টাইল দেখতে লিখুন: .style list");
+    return message.reply("⚠️ ব্যবহারের নিয়ম: .style <font_style> <text_style> <your_text>\n\nউদাহরণ: .style 05 18 VIP SIR RIYAD\n\nসকল স্টাইল দেখতে লিখুন: .style list");
   }
 
   if (args[0].toLowerCase() === "list") {
