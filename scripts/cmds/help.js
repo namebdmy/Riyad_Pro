@@ -6,8 +6,8 @@ module.exports = {
   config: {
     name: "help",
     aliases: ["menu", "commands"],
-    version: "6.3",
-    author: "EryXenX",
+    version: "7.0",
+    author: "RiYaD",
     shortDescription: "Show all commands",
     longDescription: "Show all commands in clean UI",
     category: "system",
@@ -46,11 +46,11 @@ module.exports = {
     const cleanCategoryName = (text) => text ? text.toLowerCase() : "others";
 
     const categoryEmojis = {
-      system: "⚙️",
-      economy: "💰",
-      moderation: "🛡️",
-      fun: "🎮",
-      others: "📁"
+        'system': '⚙️',
+        'economy': '💰',
+        'moderation': '🛡️',
+        'fun': '🎮',
+        'others': '📁'
     };
 
     if (args[0]) {
@@ -70,17 +70,8 @@ module.exports = {
         : cmd.config.name;
 
       const infoMsg =
-`┏━━━━━━━━━━━━━┓
- 🧩 𝐂𝐌𝐃 𝐈𝐍𝐅𝐎
-┗━━━━━━━━━━━━━┛
- ✦ Name     : ${cmd.config.name}
- ✦ Aliases  : ${cmd.config.aliases?.join(", ") || "None"}
- ✦ Category : ${categoryFont((cmd.config.category || "Others").toUpperCase())}
- ✦ Version  : v${cmd.config.version || "1.0"}
- ✦ Author   : ${cmd.config.author || "Unknown"}
- ✦ Usage    : ${prefix}${usage}
-━━━━━━━━━━━━━━━
- 📝 ${(cmd.config.longDescription || cmd.config.shortDescription || "No description")}`;
+`╭━━━━━━━•🧩•━━━━━━━╮\n  ⚜️  ${fancyFont('CMD INFO')}  ⚜️\n╰━━━━━━━•🧩•━━━━━━━╯` +
+`\n ✦ Name     : ${cmd.config.name}\n ✦ Aliases  : ${cmd.config.aliases?.join(', ') || 'None'}\n ✦ Category : ${categoryFont((cmd.config.category || 'Others').toUpperCase())}\n ✦ Version  : v${cmd.config.version || '1.0'}\n ✦ Author   : ${cmd.config.author || 'Unknown'}\n ✦ Usage    : ${prefix}${usage}\n ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n 📝 Description:\n ${(cmd.config.longDescription || cmd.config.shortDescription || 'No description')}`;
 
       return message.reply(infoMsg);
     }
@@ -94,22 +85,18 @@ module.exports = {
     }
 
     const formatCommands = (cmds) =>
-      cmds.sort().map(c => `   ➥ ${fancyFont(c)}`).join("\n");
+      cmds.sort().map(c => `  │  𖧷 ${fancyFont(c)}`).join("\n");
 
     let msg =
-`┏━━━━━━━━━━━━━┓
- 📜 𝐂𝐌𝐃 𝐇𝐔𝐁
-┗━━━━━━━━━━━━━┛
- 🔧 ${prefix} | 📊 ${allCommands.size} cmds
-━━━━━━━━━━━━━━━\n`;
+`╭━━━━━━━•⭐•━━━━━━━╮\n  ⚜️  ${fancyFont('CMD HUB')}  ⚜️\n╰━━━━━━━•⭐•━━━━━━━╯\n ⚔️ Prefix  : ${prefix}\n 📊 Total   : ${allCommands.size} Commands\n ▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬` + "\n";
 
     for (const cat of Object.keys(categories)) {
       const emoji = categoryEmojis[cat] || "📁";
-      msg += `\n${emoji} 『 ${categoryFont(cat.toUpperCase())} 』 ✦ ${categories[cat].length}\n`;
+      msg += `\n${emoji} ┠ ${categoryFont(cat.toUpperCase())} ┨ ✦ ${categories[cat].length}\n`;
       msg += formatCommands(categories[cat]) + "\n";
     }
 
-    msg += `\n━━━━━━━━━━━━━━━\n✨ ${prefix}help <command>`;
+    msg += `\n▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬\n📌 Use: ${prefix}help <cmd> to get info!`;
 
     const gifURLs = [
       "https://i.imgur.com/ItylQG8.gif",
