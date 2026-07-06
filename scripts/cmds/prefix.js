@@ -36,7 +36,7 @@ module.exports = {
 			confirmThisThread: "Vui lòng thả cảm xúc bất kỳ vào tin nhắn này để xác nhận thay đổi prefix trong nhóm chat của bạn",
 			successGlobal: "Đã thay đổi prefix hệ thống bot thành: %1",
 			successThisThread: "Đã thay đổi prefix trong nhóm chat của bạn thành: %1",
-			myPrefix: "╭⚜️━━━ 𝐓𝐇Ô𝐍𝐆 𝐓𝐈𝐍 𝐏𝐑𝐄𝐅𝐈𝐗 ━━━⚜️╮\n┃ 🌐 Prefix hệ thống: %1\n┃ 🛸 Prefix nhóm chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Phiên bản: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ 𝐓𝐇Ô𝐍𝐆 𝐓𝐈𝐍 𝐏𝐑𝐄𝐅𝐈𝐗 ━━⚜️╮\n┃ 🌐 Prefix hệ thống: %1\n┃ 🛸 Prefix nhóm chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Phiên bản: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		en: {
 			reset: "Your prefix has been reset to default: %1",
@@ -45,7 +45,7 @@ module.exports = {
 			confirmThisThread: "Please react to this message to confirm change prefix in your box chat",
 			successGlobal: "Changed prefix of system bot to: %1",
 			successThisThread: "Changed prefix in your box chat to: %1",
-			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Thread Prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Thread Prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		tl: {
 			reset: "Ang iyong prefix ay na-reset sa default: %1",
@@ -54,7 +54,7 @@ module.exports = {
 			confirmThisThread: "Mangyaring mag-react sa mensaheng ito para kumpirmahin ang pagbabago ng prefix sa iyong box chat",
 			successGlobal: "Binago ang prefix ng system bot sa: %1",
 			successThisThread: "Binago ang prefix sa iyong box chat sa: %1",
-			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Prefix ng iyong group chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Bersyon: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Prefix ng iyong group chat: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Bersyon: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		hi: {
 			reset: "Aapka prefix default par reset kar diya gaya: %1",
@@ -63,7 +63,7 @@ module.exports = {
 			confirmThisThread: "Aapke box chat mein prefix badlne ki pushthi ke liye is message par react karein",
 			successGlobal: "System bot ka prefix badal diya gaya: %1",
 			successThisThread: "Aapke box chat ka prefix badal diya gaya: %1",
-			myPrefix: "╭⚜️━━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Aapke group chat ka prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ 𝐁𝐎𝐓 𝐏𝐑𝐄𝐅𝐈𝐗 𝐈𝐍𝐅𝐎 ━━⚜️╮\n┃ 🌐 Global Prefix: %1\n┃ 🛸 Aapke group chat ka prefix: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ Version: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		ar: {
 			reset: "تمت إعادة تعيين بادئتك إلى الافتراضي: %1",
@@ -72,7 +72,7 @@ module.exports = {
 			confirmThisThread: "الرجاء التفاعل مع هذه الرسالة لتأكيد تغيير البادئة في محادثتك",
 			successGlobal: "تم تغيير بادئة بوت النظام إلى: %1",
 			successThisThread: "تم تغيير البادئة في محادثتك إلى: %1",
-			myPrefix: "╭⚜️━━━ معلومات البادئة ━━━⚜️╮\n┃ 🌐 البادئة العامة: %1\n┃ 🛸 بادئة مجموعتك: %2\n┃\n┃ 👤 المالك: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ الإصدار: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ معلومات البادئة ━━⚜️╮\n┃ 🌐 البادئة العامة: %1\n┃ 🛸 بادئة مجموعتك: %2\n┃\n┃ 👤 المالك: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ الإصدار: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		},
 		bn: {
 			reset: "আপনার prefix default এ রিসেট করা হয়েছে: %1",
@@ -81,7 +81,7 @@ module.exports = {
 			confirmThisThread: "আপনার box chat এ prefix পরিবর্তন নিশ্চিত করতে এই message এ react করুন",
 			successGlobal: "System bot এর prefix পরিবর্তন হয়েছে: %1",
 			successThisThread: "আপনার box chat এর prefix পরিবর্তন হয়েছে: %1",
-			myPrefix: "╭⚜️━━━ বটের প্রিফিক্স তথ্য ━━━⚜️╮\n┃ 🌐 গ্লোবাল প্রিফিক্স: %1\n┃ 🛸 আপনার গ্রুপ চ্যাট প্রিফিক্স: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ সংস্করণ: 2.0\n╰━━━━━━━━━━━━━━━━━━━━━━╯"
+			myPrefix: "╭⚜️━━ বটের প্রিফিক্স তথ্য ━━⚜️╮\n┃ 🌐 গ্লোবাল প্রিফিক্স: %1\n┃ 🛸 আপনার গ্রুপ চ্যাট প্রিফিক্স: %2\n┃\n┃ 👤 Owner: 𝗥𝗶𝘆𝗮𝗱\n┃ ⚡ সংস্করণ: 2.0\n╰━━━━━━━━━━━━━━━━━━━━╯"
 		}
 	},
 
