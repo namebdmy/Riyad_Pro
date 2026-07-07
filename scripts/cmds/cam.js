@@ -19,7 +19,7 @@ module.exports = {
     author: "Riyad",
     countDown: 25, // Countdown cooldown in seconds to prevent spamming
     role: 0, // 0 = All users, 1 = Group admins, 2 = Bot operators/admins
-    shortName: ["ci", "co", "camin", "camout"],
+    aliases: ["ci", "co", "camin", "camout"],
     description: "Activate (CI/cam in) or deactivate (CO/cam out) the bot messenger module.",
     category: "system",
     guide: {
@@ -33,7 +33,7 @@ module.exports = {
    */
   onStart: async function ({ api, event, args, reply, message }) {
     const { threadID, messageID, senderID } = event;
-    const input = args.join(" ").trim().toLowerCase();
+    const input = (args || []).join(" ").trim().toLowerCase();
     const trigger = input || "";
 
     // Helper to send messages across multiple bot APIs
@@ -68,10 +68,10 @@ module.exports = {
         return sendMsg("🤖 Sir, I am already active and ready to serve you!");
       }
       isBotActive = true;
-      return sendMsg("✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
-💬 "আমাকে ডাকার জন্য ধন্যবাদ 𝐑𝐈𝐘𝐀𝐃 স্যার।
-🚀 বলুন আমি আপনার জন্য কী করতে পারি?"
-✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨");
+      return sendMsg(`✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
+💬 আমাকে ডাকার জন্য ধন্যবাদ 𝐑𝐈𝐘𝐀𝐃 স্যার।
+🚀 বলুন আমি আপনার জন্য কী করতে পারি?
+✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨`);
     } 
     
     else if (trigger === "out" || trigger === "cam out" || trigger === "co") {
@@ -79,11 +79,11 @@ module.exports = {
         return sendMsg("💤 Sir, I am already inactive (offline). Type 'cam in' or 'CI' to call me back!");
       }
       isBotActive = false;
-      return sendMsg("✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
-💬 "ঠিক আছে 𝐑𝐈𝐘𝐀𝐃 স্যার, আমি যাচ্ছি।
+      return sendMsg(`✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
+💬 ঠিক আছে 𝐑𝐈𝐘𝐀𝐃 স্যার, আমি যাচ্ছি।
 ⌛ পরে ডাকবেন, আমি সাথে সাথে
-✨ চলে আসবো!" ✨
-✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨");
+✨ চলে আসবো!
+✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨`);
     } 
     
     else {
