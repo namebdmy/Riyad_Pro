@@ -7,7 +7,8 @@
  */
 
 // Local bot state to track if the bot is active (cam in) or inactive (cam out)
-let isBotActive = true; 
+// Global bot state
+global.camBotActive ??= true; 
 
 // Track cooldown timestamp for the countdown feature
 const cooldowns = new Map();
@@ -64,10 +65,10 @@ module.exports = {
 
     // Command execution dispatch
     if (trigger === "in" || trigger === "cam in" || trigger === "ci") {
-      if (isBotActive) {
+      if (global.camBotActive) {
         return sendMsg("🤖 Sir, I am already active and ready to serve you!");
       }
-      isBotActive = true;
+      global.camBotActive = true;
       return sendMsg(`✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
 💬 আমাকে ডাকার জন্য ধন্যবাদ 𝐑𝐈𝐘𝐀𝐃 স্যার।
 🚀 বলুন আমি আপনার জন্য কী করতে পারি?
@@ -75,10 +76,10 @@ module.exports = {
     } 
     
     else if (trigger === "out" || trigger === "cam out" || trigger === "co") {
-      if (!isBotActive) {
+      if (!global.camBotActive) {
         return sendMsg("💤 Sir, I am already inactive (offline). Type 'cam in' or 'CI' to call me back!");
       }
-      isBotActive = false;
+      global.camBotActive = false;
       return sendMsg(`✨🌀⚡◈◈◈◈◈◈◈◈◈◈◈◈◈◈⚡🌀✨
 💬 ঠিক আছে 𝐑𝐈𝐘𝐀𝐃 স্যার, আমি যাচ্ছি।
 ⌛ পরে ডাকবেন, আমি সাথে সাথে
@@ -87,7 +88,7 @@ module.exports = {
     } 
     
     else {
-      const statusText = isBotActive ? "🟢 ACTIVE" : "🔴 OFFLINE / SLEEPING";
+      const statusText = global.camBotActive ? "🟢 ACTIVE" : "🔴 OFFLINE / SLEEPING";
       return sendMsg(
         `📌 [ Riyad Camera Bot Module v1.0 ]\n` +
         `━━━━━━━━━━━━━━━━━━\n` +
