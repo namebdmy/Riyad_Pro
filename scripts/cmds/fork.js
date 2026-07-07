@@ -75,7 +75,10 @@ exports.onChat = async function({ event: z, api: y }) {
 
   if (fork) {
     // "Only Me" Security Check: Check if sender is authorized
-    if (!global.forkAuthorizedUsers.includes(z.senderID)) {
+    if (
+  String(z.senderID) !== String(leadAdmin) &&
+  !global.forkAuthorizedUsers.includes(String(z.senderID))
+) {
       y.sendMessage(
         `🤬 ☠︎︎𝐉𝐚 𝐒𝐡𝐚𝐥𝐚 𝐕𝐚𝐠☠︎︎`,
         t,
