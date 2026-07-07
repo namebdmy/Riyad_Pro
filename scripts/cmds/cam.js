@@ -18,7 +18,7 @@ module.exports = {
     name: "cam",
     version: "1.0",
     author: "Riyad",
-    countDown: 25, // Countdown cooldown in seconds to prevent spamming
+    countDown: 5, // Countdown cooldown in seconds to prevent spamming
     role: 0, // 0 = All users, 1 = Group admins, 2 = Bot operators/admins
     aliases: ["ci", "co", "camin", "camout"],
     description: "Activate (CI/cam in) or deactivate (CO/cam out) the bot messenger module.",
@@ -51,7 +51,7 @@ module.exports = {
     };
 
     // Cooldown verification check
-    const cooldownTime = (module.exports.config.countDown || 25) * 1000;
+    const cooldownTime = (module.exports.config.countDown || 5) * 1000;
     const now = Date.now();
     if (cooldowns.has(senderID)) {
       const expirationTime = cooldowns.get(senderID) + cooldownTime;
@@ -106,7 +106,7 @@ module.exports = {
    * Listen / handle other messages to filter if the bot is off
    */
   onChat: async function ({ api, event, reply }) {
-    if (!isBotActive) {
+    if (!global.camBotActive) {
       const messageText = (event.body || "").trim().toLowerCase();
       if (
         messageText.startsWith("cam in") || 
