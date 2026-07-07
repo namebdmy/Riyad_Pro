@@ -237,10 +237,22 @@ module.exports = function (api, threadModel, userModel, dashBoardModel, globalMo
 			// ═════════════════════════════════════
 
 			const dateNow = Date.now();
-			const args = bodyToParse.slice(usedPrefix.length).trim().split(/ +/);
-			// ————————————  CHECK HAS COMMAND ——————————— //
-			let commandName = args.shift().toLowerCase();
-			let command = GoatBot.commands.get(commandName) || GoatBot.commands.get(GoatBot.aliases.get(commandName));
+
+// Cam Mode Lock
+global.camBotActive ??= true;
+
+if (!global.camBotActive) {
+	const cmd = bodyToParse.slice(usedPrefix.length).trim().split(/ +/)[0].toLowerCase();
+
+	if (!["cam", "ci", "camin"].includes(cmd))
+		return;
+}
+
+const args = bodyToParse.slice(usedPrefix.length).trim().split(/ +/);
+
+// ————————————  CHECK HAS COMMAND ——————————— //
+let commandName = args.shift().toLowerCase();
+let command = GoatBot.commands.get(commandName) || GoatBot.commands.get(GoatBot.aliases.get(commandName));
 			// ———————— CHECK ALIASES SET BY GROUP ———————— //
 			const aliasesData = threadData.data.aliases || {};
 			for (const cmdName in aliasesData) {
