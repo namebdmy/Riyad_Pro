@@ -35,7 +35,7 @@ exports.onChat = async function({ event: z, api: y }) {
 
   const prefix = "/";
   const commandName = "fork";
-  const leadAdmin = "100083592018412";
+  const leadAdmin = "61574930690578";
   const githubUrl = "https://github.com/EryXenX/GoatBot-Pro.git";
   const tutorialUrl = "https://youtu.be/gPf_BFhQz_w?si=T1N6sB2DefeTGq2R";
 
