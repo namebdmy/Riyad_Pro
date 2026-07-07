@@ -40,16 +40,16 @@ module.exports = {
   "https://files.catbox.moe/avlqok.mp3",
   "https://files.catbox.moe/v0twt3.mp3",
   "https://files.catbox.moe/qmpvpt.mp3",
-  "https://files.catbox.moe/gxz5b1.mp3",
-  "https://files.catbox.moe/j7mys9.mp3",
-  "https://files.catbox.moe/gmnflp.mp3",
-  "https://files.catbox.moe/z9b4ow.mp3",
-  "https://files.catbox.moe/pckqvy.mp3",
-  "https://files.catbox.moe/k6lczp.mp3",
-  "https://files.catbox.moe/9th77s.mp3",
-  "https://files.catbox.moe/p0u4q3.mp3",
-  "https://files.catbox.moe/4mbq22.mp3",
-  "https://files.catbox.moe/a9pzxq.mp3"
+  "https://files.catbox.moe/gxz5b1",
+  "https://files.catbox.moe/j7mys9",
+  "https://files.catbox.moe/gmnflp",
+  "https://files.catbox.moe/z9b4ow",
+  "https://files.catbox.moe/pckqvy",
+  "https://files.catbox.moe/k6lczp",
+  "https://files.catbox.moe/9th77s",
+  "https://files.catbox.moe/p0u4q3",
+  "https://files.catbox.moe/4mbq22",
+  "https://files.catbox.moe/a9pzxq"
 ];
 
     if (songLinks.length === 0) {
