@@ -5,12 +5,12 @@ const path = require("path");
 
 module.exports.config = {
   name: "autotimer",
-  version: "5.1",
+  version: "5.5",
   role: 0,
   author: "RiYaD",
   description: "⏰ প্রতি ঘণ্টায় ভিডিওসহ অটো মেসেজ পাঠাবে (Ultra Optimized)",
   category: "AutoTime",
-  countDown: 3,
+  countDown: 4,
 };
 
 module.exports.onLoad = async function ({ api }) {
