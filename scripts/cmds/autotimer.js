@@ -7,7 +7,7 @@ module.exports.config = {
   name: "autotimer",
   version: "5.1",
   role: 0,
-  author: "RiYad",
+  author: "RiYaD",
   description: "⏰ প্রতি ঘণ্টায় ভিডিওসহ অটো মেসেজ পাঠাবে (Ultra Optimized)",
   category: "AutoTime",
   countDown: 3,
@@ -15,7 +15,7 @@ module.exports.config = {
 
 module.exports.onLoad = async function ({ api }) {
   // 🔒 Author lock check
-  if (module.exports.config.author !== "ʀɪʏᴀᴅ-ʜᴀsᴀɴ") {
+  if (module.exports.config.author !== "RiYaD") {
     console.error("❌ Author name has been changed. The file will not run.");
     return process.exit(1);
   }
