@@ -165,7 +165,7 @@ module.exports.onLoad = async function ({ api }) {
 ╰━━━━━━━━━━━━━━━━━━━━╯`,
   video: "https://files.catbox.moe/wrc15v.mp4"
 },  
-    "01:00 PM": {
+
 "01:00 PM": {
   text: `╭━━━〔 🕌 𝐙𝐔𝐇𝐑 • যোহরের সময় 〕━━━╮
 
@@ -222,7 +222,7 @@ module.exports.onLoad = async function ({ api }) {
 ╰━━━━━━━━━━━━━━━━━━━━╯`,
   video: "https://files.catbox.moe/vcgbxq.mp4"
 },
-  "06:30 PM": {
+
 "06:30 PM": {
   text: `╭━━━〔 🌇 𝐌𝐀𝐆𝐇𝐑𝐈𝐁 • মাগরিবের সময় 〕━━━╮
 
