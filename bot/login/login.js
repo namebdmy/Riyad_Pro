@@ -604,14 +604,12 @@ async function startBot(_0x3cad9e) {
         log.warn("SESSION GUARD", "Could not start: " + (sgErr.message || sgErr));
       }
 
-      // ✅ E2EE — Signal Protocol encrypted conversations
-      try {
-        if (typeof _0x4d5048.connectE2EE === "function") {
-          await _0x4d5048.connectE2EE();
-          log.info("E2EE", "Signal Protocol connected ✅");
-        }
-      } catch (e2eeErr) {
-        log.warn("E2EE", "Could not connect (non-fatal): " + (e2eeErr.message || e2eeErr));
+      // ✅ E2EE — auto-connected inside fca-eryxenx (loginHelper.js) already;
+      // calling connectE2EE() again here would open a second, redundant
+      // connection on the same bridge and can race with the listener that
+      // fca-eryxenx already wired into api.listenMqtt. Nothing to do here.
+      if (_0x4d5048.e2ee && typeof _0x4d5048.e2ee.isConnected === "function") {
+        log.info("E2EE", _0x4d5048.e2ee.isConnected() ? "Signal Protocol connected ✅" : "Not connected yet (non-fatal)");
       }
 
       let _0x70f374 = false;
