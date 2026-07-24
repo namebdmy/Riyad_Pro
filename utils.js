@@ -112,6 +112,20 @@ function setErrorUptime() {
 	global.statusAccountBot = 'block spam';
 	global.responseUptimeCurrent = global.responseUptimeError;
 }
+
+// JSON.stringify(err) can throw on axios/circular errors (request/response
+// objects reference each other). Check the message/known fields directly
+// instead of stringifying the whole error object.
+function isSpamError(err) {
+	if (!err) return false;
+	const msg = (err.message || err.error || err.errorSummary || "") + "";
+	if (msg.toLowerCase().includes("spam")) return true;
+	try {
+		return JSON.stringify(err).includes('spam');
+	} catch (_) {
+		return false;
+	}
+}
 const defaultStderrClearLine = process.stderr.clearLine;
 
 
@@ -360,7 +374,8 @@ function message(api, event) {
 				return await api.sendMessage(form, event.threadID, callback);
 			}
 			catch (err) {
-				if (JSON.stringify(err).includes('spam')) {
+				console.error("[message.send] sendMessage failed:", err && err.message ? err.message : err);
+				if (isSpamError(err)) {
 					setErrorUptime();
 					throw err;
 				}
@@ -372,7 +387,8 @@ function message(api, event) {
 				return await api.sendMessage(form, event.threadID, callback, event.messageID);
 			}
 			catch (err) {
-				if (JSON.stringify(err).includes('spam')) {
+				console.error("[message.reply] sendMessage failed:", err && err.message ? err.message : err);
+				if (isSpamError(err)) {
 					setErrorUptime();
 					throw err;
 				}
